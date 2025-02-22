@@ -20,7 +20,7 @@ interface ProfileSidebarProps {
 
 export function ProfileSidebar({ isEditing }: ProfileSidebarProps) {
   return (
-    <div className="w-full md:w-[351px] flex-shrink-0">
+    <div className="w-full lg:w-[351px] flex-shrink-0 space-y-4 lg:space-y-6">
       <ProfileMainCard isEditing={isEditing} />
       <ProfileSocialLinks />
     </div>
@@ -29,8 +29,8 @@ export function ProfileSidebar({ isEditing }: ProfileSidebarProps) {
 
 function ProfileMainCard({ isEditing }: { isEditing: boolean }) {
   return (
-    <div className="bg-gradient-profile-card rounded-3xl border-8 border-white/[0.12] bg-clip-content">
-      <div className="p-4 md:p-4 space-y-4 md:space-y-6">
+    <div className="bg-gradient-profile-card rounded-2xl lg:rounded-3xl border-8 border-white/[0.12] bg-clip-content">
+      <div className="p-4 space-y-4 lg:space-y-6">
         <ProfileAvatar isEditing={isEditing} />
         <ProfileInfo isEditing={isEditing} />
         <ProfileTags isEditing={isEditing} />

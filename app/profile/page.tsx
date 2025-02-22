@@ -9,7 +9,7 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <div className="max-w-[1552px] mx-auto p-4 md:px-6 md:py-8 flex flex-col md:flex-row gap-4 md:gap-8">
+    <div className="p-4 lg:p-8 flex flex-col lg:flex-row gap-4 lg:gap-6 justify-center items-start">
       <ProfileSidebar isEditing={isEditing} />
       <ContentTabs isEditing={isEditing} setIsEditing={setIsEditing} />
       <RightSidebar />
