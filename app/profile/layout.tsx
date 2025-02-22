@@ -27,7 +27,23 @@ export default function ProfileLayout({
         </div>
       </nav>
 
-      {children}
+      <div className="relative">
+        {/* Background container */}
+        <div
+          className="absolute top-0 left-[1%] w-full h-[536px] max-w-[1480px] mx-auto"
+          style={{
+            backgroundImage: 'url("/images/profile/background.png")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+          }}
+        />
+
+        {/* Content container */}
+        <div className="relative">
+          {children}
+        </div>
+      </div>
     </div>
   );
 } 
