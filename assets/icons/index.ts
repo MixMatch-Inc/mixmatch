@@ -10,3 +10,6 @@ export * from './DateIcon';
 export * from './HandIcon';
 export * from './LocationIcon';
 export * from './FlagIcon';
+export * from './SoundCloudIcon';
+export * from './ChatIcon';
+export * from './ArrowRightIcon';

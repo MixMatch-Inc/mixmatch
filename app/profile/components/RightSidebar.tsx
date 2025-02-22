@@ -36,7 +36,7 @@ export function RightSidebar() {
 
   return (
     <div className="flex-shrink-0">
-      <div className="bg-[#21202D] rounded-full flex flex-col items-center gap-2 sticky top-8 border-8 border-white/[0.12] backdrop-blur-sm bg-clip-content">
+      <div className="bg-[#21202D] rounded-full flex flex-col items-center gap-2 sticky top-8 border-8 border-white/[0.12] bg-clip-content">
         {icons.map((Icon: any, index: number) => {
           const isActive = pathname === Icon.route;
           const isHovered = hoveredIndex === index;
