@@ -1,99 +1,48 @@
-# DJ Portfolio App
+# MixMatch
 
-A modern web application for DJs to showcase their work portfolio, including videos, photos, and music samples.
+## MixMatch is a Next.js application that uses NextAuth for authentication.
 
-## 🚀 Features
+Getting Started
 
-- Modern and responsive design
-- Horizontal scrolling image gallery
-- Tab-based navigation system
-- Smooth visual effects and animations
-- Mobile and desktop adaptive interface
+## Prerequisites
 
-## 🛠️ Tech Stack
+- Node.js (Latest LTS recommended)
 
-- Next.js 14 (App Router)
-- TypeScript
-- Tailwind CSS
-- Lucide Icons
-- Radix UI (for base components)
+- npm
 
-## 📋 Prerequisites
+## Installation
 
-- Node.js 18.17 or later
-- npm or yarn or pnpm
+- Clone the repository: git clone https://github.com/mixmatch/mixmatch.git
 
-## 🔧 Installation
+- cd mixmatch
 
-1. Clone the repository:
+- Install dependencies:
 
-```bash	
-git clone https://github.com/yourusername/dj-portfolio.git
-cd dj-portfolio
-```
-
-2. Install dependencies:
-
-
-```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-```
 
-3. Run the development server:
+## Environment Variables
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+Create a .env.local file in the root directory and add the following:
 
-4. Open your browser and navigate to `http://localhost:3000` to view the application.
+NEXTAUTH_SECRET=ahdkjkasdljasndmasdsajdasdljkdsadaslk
+NEXTAUTH_URL=http://localhost:3000
 
-## 🎯 Key Components
+## Running the Application
 
-- **ContentGrids**: Handles the image gallery with horizontal scrolling and dynamic sizing
-- **ContentTabs**: Manages the tab-based navigation between different content types
-- **RightSidebar**: Contains profile information and navigation
-- **Tabs**: Reusable tab component built with Radix UI
+To start the development server, run:
 
-## 🎨 Styling
+- npm run dev
 
-The project uses Tailwind CSS for styling with:
-- Custom color schemes
-- Responsive design utilities
-- Custom animations and transitions
-- Consistent spacing and sizing system
+The app will be available at http://localhost:3000.
 
-## 🔄 State Management
+## Authentication
 
-- React's built-in state management with useState and useEffect
-- Custom hooks for specific functionalities
-- Context API for global state when needed
+- Login with one of the following credentials:
 
-## 📱 Responsive Design
+User: user@test.com
 
-The application is fully responsive with:
-- Mobile-first approach
-- Breakpoint-based layouts
-- Adaptive image sizing
-- Touch-friendly interactions
+Admin: admin@test.com
 
-## 🤝 Contributing
+password: password
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details
-
-
+Once logged in, navigate to the desired page.
