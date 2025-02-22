@@ -25,7 +25,7 @@ const tabs = [
 export function ContentTabs({ isEditing, setIsEditing }: ContentTabsProps) {
   return (
     <div className="flex-1 bg-[#21202D] rounded-[24px] border-8 border-white/[0.12] bg-clip-content w-full overflow-hidden h-auto lg:h-[967px]">
-      <div className="p-4 lg:p-6 h-full">
+      <div className="p-4 lg:p-6 h-full relative">
         <div className="flex justify-between items-center mb-4 lg:mb-6">
           <h2 className="text-3xl lg:text-[54px] font-bold">WELCOME</h2>
           {/* <Button variant="ghost" onClick={() => setIsEditing(!isEditing)}>
