@@ -1,8 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DJ Portfolio App
 
-## Getting Started
+A modern web application for DJs to showcase their work portfolio, including videos, photos, and music samples.
 
-First, run the development server:
+## 🚀 Features
+
+- Modern and responsive design
+- Horizontal scrolling image gallery
+- Tab-based navigation system
+- Smooth visual effects and animations
+- Mobile and desktop adaptive interface
+
+## 🛠️ Tech Stack
+
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- Lucide Icons
+- Radix UI (for base components)
+
+## 📋 Prerequisites
+
+- Node.js 18.17 or later
+- npm or yarn or pnpm
+
+## 🔧 Installation
+
+1. Clone the repository:
+
+```bash	
+git clone https://github.com/yourusername/dj-portfolio.git
+cd dj-portfolio
+```
+
+2. Install dependencies:
+
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
@@ -10,27 +51,49 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open your browser and navigate to `http://localhost:3000` to view the application.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🎯 Key Components
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **ContentGrids**: Handles the image gallery with horizontal scrolling and dynamic sizing
+- **ContentTabs**: Manages the tab-based navigation between different content types
+- **RightSidebar**: Contains profile information and navigation
+- **Tabs**: Reusable tab component built with Radix UI
 
-## Learn More
+## 🎨 Styling
 
-To learn more about Next.js, take a look at the following resources:
+The project uses Tailwind CSS for styling with:
+- Custom color schemes
+- Responsive design utilities
+- Custom animations and transitions
+- Consistent spacing and sizing system
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔄 State Management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- React's built-in state management with useState and useEffect
+- Custom hooks for specific functionalities
+- Context API for global state when needed
 
-## Deploy on Vercel
+## 📱 Responsive Design
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The application is fully responsive with:
+- Mobile-first approach
+- Breakpoint-based layouts
+- Adaptive image sizing
+- Touch-friendly interactions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details
+
+
