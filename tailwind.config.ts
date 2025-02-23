@@ -80,6 +80,11 @@ const config: Config = {
           },
         },
       },
+      fontFamily: {
+        inter: ["var(--font-inter)", "system-ui", "sans-serif"],
+        manrope: ["var(--font-manrope)", "system-ui", "sans-serif"],
+        spaceMono: ["var(--font-space-mono)", "monospace"],
+      },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
