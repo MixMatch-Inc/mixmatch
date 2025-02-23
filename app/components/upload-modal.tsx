@@ -44,20 +44,21 @@ export function UploadModal({
           onFileAccepted={(file) => setSelectedFile(file)}
         />
 
-        <div className="flex justify-end gap-3 mt-4">
-          <Button
-            variant="outline"
+        <div className="flex items-center gap-2 mt-4">
+          <button
+            className="flex-1 h-12 bg-white/10 hover:bg-white/20 text-white rounded-[20px] transition-colors"
             onClick={onClose}
             disabled={isUploading}
           >
             Cancel
-          </Button>
-          <Button
+          </button>
+          <button
+            className="flex-1 h-12 bg-[#EEEBFF] hover:bg-[#EEEBFF]/90 text-black rounded-[20px] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={handleUpload}
             disabled={!selectedFile || isUploading}
           >
             {isUploading ? "Uploading..." : "Upload"}
-          </Button>
+          </button>
         </div>
       </DialogContent>
     </Dialog>

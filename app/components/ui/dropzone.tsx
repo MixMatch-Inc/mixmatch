@@ -66,6 +66,7 @@ export function Dropzone({
         relative 
         mt-4 
         h-[200px] 
+        min-w-[278px]
         w-full 
         border-2 
         border-dashed 
@@ -106,7 +107,7 @@ export function Dropzone({
       ) : (
         <div className="text-center">
           <Upload className="w-8 h-8 text-white/50 mx-auto mb-2" />
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-white/70 px-4">
             {isDragActive ? (
               "Drop the file here"
             ) : (
