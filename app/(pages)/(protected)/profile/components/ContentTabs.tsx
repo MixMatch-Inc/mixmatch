@@ -3,7 +3,6 @@ import { VideoGrid, SampleGrid, PhotoGrid } from "./ContentGrids";
 
 interface ContentTabsProps {
   isEditing: boolean;
-  setIsEditing: (value: boolean) => void;
 }
 
 const tabs = [
@@ -21,7 +20,7 @@ const tabs = [
   },
 ];
 
-export function ContentTabs({ isEditing, setIsEditing }: ContentTabsProps) {
+export function ContentTabs({ isEditing }: ContentTabsProps) {
   return (
     <div className="flex-1 bg-[#21202D] rounded-[24px] border-8 border-white/[0.12] bg-clip-content w-full overflow-hidden h-auto lg:h-[967px]">
       <div className="p-4 lg:p-6 h-full relative">
