@@ -108,7 +108,7 @@ export function MediaGrid({ type = 'video' }: MediaGridProps) {
             <div className="absolute top-4 right-4">
               <button 
                 className="bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 pointer-events-auto"
-                onClick={() => removeVideo(mediaItems[0].id)}
+                onClick={() => removeMediaItem(mediaItems[0].id)}
               >
                 <Trash className="w-8 h-8 bg-white p-1 rounded-full" color="#6E3FF3" />
               </button>
