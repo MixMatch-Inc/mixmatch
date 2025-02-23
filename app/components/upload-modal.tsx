@@ -1,6 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/app/components/ui/dialog";
 import { Dropzone } from "@/app/components/ui/dropzone";
-import { Button } from "@/app/components/ui/button";
 import { useState } from "react";
 
 interface UploadModalProps {

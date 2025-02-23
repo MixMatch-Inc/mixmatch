@@ -1,37 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-export interface SocialLink {
-  id: string;
-  platform: 'instagram' | 'soundcloud' | 'spotify' | 'email';
-  url: string;
-  text: string;
-}
-
-export interface ProfileData {
-  name: string;
-  location: string;
-  avatar: string;
-  coverImage: string;
-  tags: string[];
-  description: string;
-  socialLinks: SocialLink[];
-}
-
-interface ImageItem {
-  id: string;
-  src: string;
-  alt: string;
-  index: number;
-  type: 'video' | 'sample' | 'photo';
-}
-
-interface ImageItemView {
-  id: string;
-  src: string;
-  alt: string;
-  height: string;
-}
+import { initialProfile, initialMediaItems } from '../lib/mock';
+import { ImageItem, ImageItemView, ProfileData, SocialLink } from '../interfaces/pofile';
 
 interface ProfileState {
   isEditing: boolean;
@@ -43,178 +13,33 @@ interface ProfileState {
   addTag: (tag: string) => void;
   removeTag: (tag: string) => void;
   updateSocialLink: (id: string, data: Partial<SocialLink>) => void;
-  images: ImageItemView[];
-  addImage: (file: File, type: 'video' | 'sample' | 'photo') => Promise<void>;
-  removeImage: (imageId: string) => void;
+  videos: ImageItemView[];
+  samples: ImageItemView[];
+  photos: ImageItemView[];
+  addVideo: (file: File) => Promise<void>;
+  addSample: (file: File) => Promise<void>;
+  addPhoto: (file: File) => Promise<void>;
+  removeVideo: (imageId: string) => void;
+  removeSample: (imageId: string) => void;
+  removePhoto: (imageId: string) => void;
 }
 
-const initialProfile: ProfileData = {
-  name: "MIXER",
-  location: "Los Angeles, CA",
-  avatar: "/images/profile/main.png",
-  coverImage: "/images/profile/background.png",
-  tags: ['Pop', 'Electronic', 'Hip-hop'],
-  description: "Elevate your party experience with DJ Beats Pro - the ultimate DJ app for mixing tracks and creating the perfect atmosphere for any event.",
-  socialLinks: [
-    { id: '1', platform: 'instagram', url: 'https://instagram.com/mixer', text: '@mixer' },
-    { id: '2', platform: 'soundcloud', url: 'https://soundcloud.com/mixer', text: 'Mixes Vibe Master Mixes' },
-    { id: '3', platform: 'spotify', url: 'https://spotify.com/mixer', text: 'DJ Vibe Master' },
-    { id: '4', platform: 'email', url: 'mailto:djvibemaster@gmail.com', text: 'djvibemaster@gmail.com' },
-  ]
-};
-
-const initialImages: ImageItem[] = [
-  { 
-    id: '1', 
-    src: '/images/profile/image1.png', 
-    alt: 'DJ Performance Night Club', 
-    index: 0,
-    type: 'video' 
-  },
-  { 
-    id: '2', 
-    src: '/images/profile/image2.png', 
-    alt: 'Festival Performance', 
-    index: 1,
-    type: 'video' 
-  },
-  { 
-    id: '3', 
-    src: '/images/profile/image3.png', 
-    alt: 'Concert Stage', 
-    index: 2,
-    type: 'video' 
-  },
-  { 
-    id: '4', 
-    src: '/images/profile/image4.png', 
-    alt: 'DJ Set Performance', 
-    index: 3, 
-    type: 'video' 
-  },
-  { 
-    id: '5', 
-    src: '/images/profile/image5.png', 
-    alt: 'Live Music Event', 
-    index: 4, 
-    type: 'video' 
-  },
-  { 
-    id: '6', 
-    src: '/images/profile/image6.png', 
-    alt: 'Studio Session', 
-    index: 5, 
-    type: 'sample' 
-  },
-  { 
-    id: '7', 
-    src: '/images/profile/image7.png', 
-    alt: 'Music Production', 
-    index: 6, 
-    type: 'sample' 
-  },
-  { 
-    id: '8', 
-    src: '/images/profile/image8.png', 
-    alt: 'Mixing Console', 
-    index: 7, 
-    type: 'sample' 
-  },
-  { 
-    id: '9', 
-    src: '/images/profile/image9.png', 
-    alt: 'Recording Session', 
-    index: 8, 
-    type: 'sample' 
-  },
-  { 
-    id: '10', 
-    src: '/images/profile/image3.png', 
-    alt: 'Artist Portrait', 
-    index: 9, 
-    type: 'photo' 
-  },
-  { 
-    id: '11', 
-    src: '/images/profile/image1.png', 
-    alt: 'Backstage Moment', 
-    index: 10, 
-    type: 'photo' 
-  },
-  { 
-    id: '12', 
-    src: '/images/profile/image7.png', 
-    alt: 'Fan Interaction', 
-    index: 11, 
-    type: 'photo' 
-  },
-  { 
-    id: '13', 
-    src: '/images/profile/image9.png', 
-    alt: 'Event Preparation', 
-    index: 12, 
-    type: 'photo' 
-  },
-  { 
-    id: '14', 
-    src: '/images/profile/image2.png', 
-    alt: 'Stage Setup', 
-    index: 13, 
-    type: 'photo' 
-  },
-  { 
-    id: '15', 
-    src: '/images/profile/image5.png', 
-    alt: 'Equipment Setup', 
-    index: 14, 
-    type: 'photo' 
-  },
-  { 
-    id: '16', 
-    src: '/images/profile/image8.png', 
-    alt: 'Venue Overview', 
-    index: 15, 
-    type: 'photo' 
-  },
-  { 
-    id: '17', 
-    src: '/images/profile/image4.png', 
-    alt: 'Crowd Interaction', 
-    index: 16, 
-    type: 'photo' 
-  },
-  { 
-    id: '18', 
-    src: '/images/profile/image1.png', 
-    alt: 'DJ Performance', 
-    index: 17, 
-    type: 'photo' 
-  },
-  { 
-    id: '19', 
-    src: '/images/profile/image1.png', 
-    alt: 'DJ Performance', 
-    index: 18, 
-    type: 'photo' 
-  }
-];
-
 const PREDEFINED_HEIGHTS = [
-  'h-[293px]', 
-  'h-[210px]', 
-  'h-[170px]', 
-  'h-[332px]', 
-  'h-[234px]', 
-  'h-[268px]', 
-  'h-[340px]', 
-  'h-[162px]', 
+  'h-[293px]',
+  'h-[210px]',
+  'h-[170px]',
+  'h-[332px]',
+  'h-[234px]',
+  'h-[268px]',
+  'h-[340px]',
+  'h-[162px]',
 ];
 
 const getImageHeight = (index: number): string => {
   if (index === 0) {
     return 'h-[518px]';
   }
-  
+
   const adjustedIndex = (index - 1) % PREDEFINED_HEIGHTS.length;
   return PREDEFINED_HEIGHTS[adjustedIndex];
 };
@@ -223,7 +48,7 @@ const createImageItem = (id: string, src: string, index: number): ImageItemView 
   return {
     id,
     src,
-    alt: 'DJ Performance',
+    alt: `DJ Performance ${index + 1}`,
     height: getImageHeight(index)
   };
 };
@@ -233,13 +58,16 @@ export const useProfileStore = create(
     (set, get) => ({
       isEditing: false,
       profile: initialProfile,
+      videos: initialMediaItems.filter(image => image.type === 'video').map((image, index) => createImageItem(image.id, image.src, index)),
+      samples: initialMediaItems.filter(image => image.type === 'sample').map((image, index) => createImageItem(image.id, image.src, index)),
+      photos: initialMediaItems.filter(image => image.type === 'photo').map((image, index) => createImageItem(image.id, image.src, index)),
       toggleEditing: () => set((state) => ({ isEditing: !state.isEditing })),
-      
-      updateProfile: (data) => 
+
+      updateProfile: (data) =>
         set((state) => ({
           profile: { ...state.profile, ...data }
         })),
-      
+
       updateAvatar: async (file) => {
         const imageUrl = await fileToDataUrl(file);
         set((state) => ({
@@ -280,27 +108,66 @@ export const useProfileStore = create(
           }
         })),
 
-      images: initialImages.map(image => createImageItem(image.id, image.src, image.index)),
-      
-      addImage: async (file: File, type) => { 
+      addVideo: async (file: File) => {
         const imageUrl = await fileToDataUrl(file);
         const newImage: ImageItem = {
           id: `new-${Date.now()}`,
           src: imageUrl,
           alt: file.name,
-          index: get().images.length + 1,
-          type
+          index: get().videos.length + 1,
+          type: 'video'
         };
-        
+
         set((state) => ({
-          images: [...state.images, newImage].map((img, index) => createImageItem(img.id, img.src, index))
+          videos: [...state.videos, newImage].map((img, index) => createImageItem(img.id, img.src, index))
         }));
       },
 
-      removeImage: (imageId: string) => 
+      removeVideo: (imageId: string) =>
         set((state) => ({
-          images: state.images.filter(img => img.id !== imageId).map((img, index) => createImageItem(img.id, img.src, index))
+          videos: state.videos.filter(img => img.id !== imageId).map((img, index) => createImageItem(img.id, img.src, index))
         })),
+
+      addSample: async (file: File) => {
+        const imageUrl = await fileToDataUrl(file);
+        const newImage: ImageItem = {
+          id: `new-${Date.now()}`,
+          src: imageUrl,
+          alt: file.name,
+          index: get().samples.length + 1,
+          type: 'sample'
+        };
+
+        set((state) => ({
+          samples: [...state.samples, newImage].map((img, index) => createImageItem(img.id, img.src, index))
+        }));
+      },
+
+      removeSample: (imageId: string) =>
+        set((state) => ({
+          samples: state.samples.filter(img => img.id !== imageId).map((img, index) => createImageItem(img.id, img.src, index))
+        })),
+
+      addPhoto: async (file: File) => {
+        const imageUrl = await fileToDataUrl(file);
+        const newImage: ImageItem = {
+          id: `new-${Date.now()}`,
+          src: imageUrl,
+          alt: file.name,
+          index: get().photos.length + 1,
+          type: 'photo'
+        };
+
+        set((state) => ({
+          photos: [...state.photos, newImage].map((img, index) => createImageItem(img.id, img.src, index))
+        }));
+      },
+
+      removePhoto: (imageId: string) =>
+        set((state) => ({
+          photos: state.photos.filter(img => img.id !== imageId).map((img, index) => createImageItem(img.id, img.src, index))
+        })),
+
     }),
     {
       name: 'profile-storage',

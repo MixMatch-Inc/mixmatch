@@ -1,11 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/components/ui/tabs";
-import { VideoGrid, SampleGrid, PhotoGrid } from "./ContentGrids";
+import { MediaGrid } from "./ContentGrids";
+import { ContentTab } from "@/app/interfaces/pofile";
 
-interface ContentTabsProps {
-  isEditing: boolean;
-}
-
-const tabs = [
+const tabs: ContentTab[] = [
   {
     value: "videos",
     label: "Videos",
@@ -20,19 +17,16 @@ const tabs = [
   },
 ];
 
-export function ContentTabs({ isEditing }: ContentTabsProps) {
+export function ContentTabs( ) {
   return (
     <div className="flex-1 bg-[#21202D] rounded-[24px] border-8 border-white/[0.12] bg-clip-content w-full overflow-hidden h-auto lg:h-[967px]">
       <div className="p-4 lg:p-6 h-full relative">
         <div className="flex justify-between items-center mb-4 lg:mb-6">
           <h2 className="text-3xl lg:text-[54px] text-white font-bold">WELCOME</h2>
-          {/* <Button variant="ghost" onClick={() => setIsEditing(!isEditing)}>
-            {isEditing ? "Save" : "Edit Profile"}
-          </Button> */}
         </div>
 
         <Tabs defaultValue="videos" className="h-[calc(100%-100px)]">
-          <div className="flex items-center justify-center mb-4 lg:mb-6 border-2 bg-black/25 border-white/10 rounded-[28px] max-w-[312px] h-[56px]">
+          <div className="flex items-center justify-center mb-4 lg:mb-6 border-2 bg-black/25 border-white/10 rounded-[28px] max-w-[294px] h-[56px]">
             <TabsList className="flex items-center justify-center gap-0 bg-transparent border-none p-0 w-full">
               {tabs.map((tab) => (
                 <TabsTrigger 
@@ -47,15 +41,15 @@ export function ContentTabs({ isEditing }: ContentTabsProps) {
           </div>
 
           <TabsContent value="videos">
-            <VideoGrid isEditing={isEditing} />
+            <MediaGrid type="video" />
           </TabsContent>
 
           <TabsContent value="samples">
-            <SampleGrid isEditing={isEditing} />
+            <MediaGrid type="sample" />
           </TabsContent>
 
           <TabsContent value="photos">
-            <PhotoGrid isEditing={isEditing} />
+            <MediaGrid type="photo" />
           </TabsContent>
         </Tabs>
       </div>
