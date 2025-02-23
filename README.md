@@ -39,10 +39,16 @@ The app will be available at http://localhost:3000.
 
 - Login with one of the following credentials:
 
-User: user@test.com
+User: user@test.com (Free subscription plan)
+
+Pro User: pro@test.com (Pro subscription plan)
+
+Master User: master@test.com (Master subscription plan)
 
 Admin: admin@test.com
 
+You can see the details in the [auth.config.ts file](./app/api/auth/[...nextauth]/auth.config.ts)
 password: password
+
 
 Once logged in, navigate to the desired page.
