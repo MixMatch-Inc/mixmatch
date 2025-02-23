@@ -182,11 +182,24 @@ const initialImages: ImageItem[] = [
     alt: 'Crowd Interaction', 
     index: 16, 
     type: 'photo' 
+  },
+  { 
+    id: '18', 
+    src: '/images/profile/image1.png', 
+    alt: 'DJ Performance', 
+    index: 17, 
+    type: 'photo' 
+  },
+  { 
+    id: '19', 
+    src: '/images/profile/image1.png', 
+    alt: 'DJ Performance', 
+    index: 18, 
+    type: 'photo' 
   }
 ];
 
-export const PREDEFINED_HEIGHTS = [
-  'h-[518px]', 
+const PREDEFINED_HEIGHTS = [
   'h-[293px]', 
   'h-[210px]', 
   'h-[170px]', 
@@ -197,10 +210,13 @@ export const PREDEFINED_HEIGHTS = [
   'h-[162px]', 
 ];
 
-
 const getImageHeight = (index: number): string => {
-  const patternIndex = index % PREDEFINED_HEIGHTS.length;
-  return PREDEFINED_HEIGHTS[patternIndex];
+  if (index === 0) {
+    return 'h-[518px]';
+  }
+  
+  const adjustedIndex = (index - 1) % PREDEFINED_HEIGHTS.length;
+  return PREDEFINED_HEIGHTS[adjustedIndex];
 };
 
 const createImageItem = (id: string, src: string, index: number): ImageItemView => {
@@ -277,7 +293,7 @@ export const useProfileStore = create(
         };
         
         set((state) => ({
-          images: [...state.images, createImageItem(newImage.id, newImage.src, newImage.index)]
+          images: [...state.images, newImage].map((img, index) => createImageItem(img.id, img.src, index))
         }));
       },
 

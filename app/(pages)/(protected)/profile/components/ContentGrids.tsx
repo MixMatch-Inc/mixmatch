@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
-import { ArrowRight, Trash } from 'lucide-react';
+import { ArrowRight, Trash, Plus } from 'lucide-react';
 import React from 'react';
 import { useProfileStore } from '@/app/store/useProfileStore';
+import { UploadModal } from '@/app/components/upload-modal';
 
   
 
@@ -11,6 +12,7 @@ export function VideoGrid() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(true);
+  const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -38,81 +40,62 @@ export function VideoGrid() {
   }, []);
 
   const renderImageColumns = () => {
-    if (images.length === 1) {
-      return (
-        <div className="w-[260px] h-[518px] relative shrink-0">
-          <div className="h-full rounded-2xl overflow-hidden">
-            {isEditing && (
-              <div className="absolute top-4 right-4">
-                <button className="bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 pointer-events-auto" onClick={() => removeImage(images[0].id)}>
-                <Trash className="w-8 h-8 bg-white p-1 rounded-full" color="#6E3FF3" />
-                </button>
-              </div>
-            )}
-            <img
-              src={images[0].src}
-              alt={images[0].alt}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      );
-    }
+    if (images.length === 0) return null;
 
     const result = [];
     let currentIndex = 0;
 
+    // Primera imagen siempre es grande
+    result.push(
+      <div key={images[0].id} className="w-[260px] h-[518px] relative shrink-0">
+        <div className="h-full rounded-2xl overflow-hidden">
+          {isEditing && (
+            <div className="absolute top-4 right-4">
+              <button 
+                className="bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 pointer-events-auto"
+                onClick={() => removeImage(images[0].id)}
+              >
+                <Trash className="w-8 h-8 bg-white p-1 rounded-full" color="#6E3FF3" />
+              </button>
+            </div>
+          )}
+          <img
+            src={images[0].src}
+            alt={images[0].alt}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    );
+    currentIndex = 1;
+
+    // Resto de imágenes en pares
     while (currentIndex < images.length) {
-      if (currentIndex % 9 === 0 || (currentIndex === images.length - 1 && currentIndex % 2 === 0)) {
-        result.push(
-          <div key={images[currentIndex].id} className="w-[260px] h-[518px] relative shrink-0">
-            <div className="h-full rounded-2xl overflow-hidden">
+      const pair = images.slice(currentIndex, currentIndex + 2);
+      result.push(
+        <div key={`pair-${currentIndex}`} className="w-[171px] grid grid-cols-1 gap-2 shrink-0">
+          {pair.map((image) => (
+            <div key={image.id} className={`${image.height} relative rounded-2xl overflow-hidden`}>
               {isEditing && (
                 <div className="absolute top-4 right-4">
-                  <button className="bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 pointer-events-auto" onClick={() => console.log(images, currentIndex % 9)}>
+                  <button 
+                    className="bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 pointer-events-auto"
+                    onClick={() => removeImage(image.id)}
+                  >
                     <Trash className="w-8 h-8 bg-white p-1 rounded-full" color="#6E3FF3" />
                   </button>
                 </div>
               )}
               <img
-                src={images[currentIndex].src}
-                alt={images[currentIndex].alt}
+                src={image.src}
+                alt={image.alt}
                 className="w-full h-full object-cover"
               />
             </div>
-          </div>
-        );
-        currentIndex++;
-      } else {
-        const pair = images.slice(currentIndex, currentIndex + 2);
-        result.push(
-          <div 
-            key={`pair-${currentIndex}`}
-            className="w-[171px] grid grid-cols-1 gap-2 shrink-0"
-          >
-            {pair.map((image) => (
-              <div 
-                key={image.id}
-                className={`${image.height} relative rounded-2xl overflow-hidden`}
-              >
-                {isEditing && (
-                  <div className="absolute top-4 right-4">
-                    <button className="bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 pointer-events-auto" onClick={() => removeImage(image.id)}>
-                      <Trash className="w-8 h-8 bg-white p-1 rounded-full" color="#6E3FF3" />
-                    </button>
-                  </div>
-                )}
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        );
-        currentIndex += 2;
-      }
+          ))}
+        </div>
+      );
+      currentIndex += 2;
     }
 
     return result;
@@ -162,6 +145,24 @@ export function VideoGrid() {
           </button>
         </div>
       </div>
+
+      {isEditing && (
+        <>
+          <button
+            onClick={() => setIsUploadModalOpen(true)}
+            className="mt-4 h-[200px] w-full border-2 border-dashed border-white/30 rounded-lg flex items-center justify-center hover:border-white/50 transition-colors"
+          >
+            <Plus className="w-8 h-8 text-white/50" />
+          </button>
+
+          <UploadModal
+            isOpen={isUploadModalOpen}
+            onClose={() => setIsUploadModalOpen(false)}
+            onUpload={(file) => addImage(file, 'video')}
+            title="Upload New Video"
+          />
+        </>
+      )}
     </div>
   );
 }
