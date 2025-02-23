@@ -19,7 +19,6 @@ const Calendar = () => {
     day = addDays(day, 1);
   }
 
-  // Function to randomly assign dot colors
   const getDotColor = (day: Date) => {
     const colors = ["bg-red-500", "bg-orange-500", "bg-green-500"];
     return colors[day.getDate() % colors.length];
