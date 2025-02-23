@@ -48,5 +48,7 @@ Master User: master@test.com (Master subscription plan)
 Admin: admin@test.com
 
 You can see the details in the [auth.config.ts file](./app/api/auth/[...nextauth]/auth.config.ts)
+password: password
+
 
 Once logged in, navigate to the desired page.
