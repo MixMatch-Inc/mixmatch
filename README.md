@@ -43,4 +43,6 @@ User: user@test.com
 
 Admin: admin@test.com
 
+password: password
+
 Once logged in, navigate to the desired page.
