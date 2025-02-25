@@ -1,23 +1,23 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   const submitLogin = useCallback(
     async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
 
-      const form = event.target as HTMLFormElement;
-      const formData = new FormData(form);
-
       await signIn('credentials', {
         redirect: false,
-        email: formData.get('email'),
-        password: formData.get('password'),
+        email,
+        password,
       });
     },
-    []
+    [email, password]
   );
 
   return (
@@ -33,12 +33,16 @@ export default function LoginPage() {
           type="text"
           name="email"
           placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <input
           className="p-2 bg-gray-200 dark:bg-gray-600 rounded"
           type="password"
           name="password"
           placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button
           className="p-2 bg-gray-200 dark:bg-gray-800 rounded"
