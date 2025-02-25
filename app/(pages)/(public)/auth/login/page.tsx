@@ -39,7 +39,6 @@ export default function LoginPage() {
           type="password"
           name="password"
           placeholder="Password"
-          value="password"
         />
         <button
           className="p-2 bg-gray-200 dark:bg-gray-800 rounded"
