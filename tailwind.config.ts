@@ -11,8 +11,7 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'gradient-profile-card': 'linear-gradient(to bottom, #0B0A14, #6E3FF3)',
       },
       borderRadius: {
@@ -64,26 +63,20 @@ const config: Config = {
       },
       keyframes: {
         'accordion-down': {
-          from: {
-            height: '0',
-          },
-          to: {
-            height: 'var(--radix-accordion-content-height)',
-          },
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
-          from: {
-            height: 'var(--radix-accordion-content-height)',
-          },
-          to: {
-            height: '0',
-          },
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
       },
       fontFamily: {
         inter: ["var(--font-inter)", "system-ui", "sans-serif"],
         manrope: ["var(--font-manrope)", "system-ui", "sans-serif"],
         spaceMono: ["var(--font-space-mono)", "monospace"],
+        lato: ["var(--font-lato)", "sans-serif"],
+        phudu: ["var(--font-phudu)", "cursive"],
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -93,4 +86,5 @@ const config: Config = {
   },
   plugins: [require('tailwindcss-animate')],
 };
+
 export default config;
