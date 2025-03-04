@@ -123,6 +123,10 @@
   opacity: 1;
 }
 
+[data-empty="false"] + #content-placeholder {
+  display: none;
+}
+
 /* Ocultar botones de navegación en móvil */
 @media (max-width: 640px) {
   .swiper-button-next,
