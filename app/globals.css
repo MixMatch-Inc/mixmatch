@@ -75,6 +75,18 @@
     animation: swipeUp 0.3s forwards;
   }
 
+  .animate-enter-from-right {
+    animation: enterFromRight 0.3s forwards;
+  }
+
+  .animate-enter-from-left {
+    animation: enterFromLeft 0.3s forwards;
+  }
+
+  .animate-enter-from-bottom {
+    animation: enterFromBottom 0.3s forwards;
+  }
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -102,6 +114,39 @@
     to {
       transform: translateY(-150%);
       opacity: 0;
+    }
+  }
+
+  @keyframes enterFromRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes enterFromLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes enterFromBottom {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
     }
   }
 }
