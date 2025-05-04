@@ -4,6 +4,10 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Loader2 } from "lucide-react"
 
+import { OnboardingForm } from "@/components/onboarding/onboarding-form"
+import { isAuthenticated } from "@/lib/auth"
+
+
 // Mock function to check authentication
 const checkAuth = async () => {
   // In production, replace with actual API call to verify token
@@ -15,11 +19,21 @@ const checkAuth = async () => {
   return !!token // Return true if token exists
 }
 
+
 export default function OnboardingPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+
+    // Check if user is authenticated
+    if (!isAuthenticated()) {
+      router.push("/")
+      return
+    }
+
+    setIsLoading(false)
+
     const verifyAuth = async () => {
       try {
         const isAuthenticated = await checkAuth()
@@ -37,6 +51,7 @@ export default function OnboardingPage() {
     }
 
     verifyAuth()
+>>
   }, [router])
 
   if (isLoading) {
@@ -51,6 +66,16 @@ export default function OnboardingPage() {
   }
 
   return (
+
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-rose-50 dark:from-gray-900 dark:to-gray-800 p-4 md:p-8">
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-3xl font-bold text-center mb-2">Complete Your Profile</h1>
+        <p className="text-gray-600 dark:text-gray-300 text-center mb-8">
+          Let's set up your MixMatch profile to find your musical matches
+        </p>
+
+        <OnboardingForm />
+
     <div className="flex min-h-screen flex-col items-center justify-center p-4 bg-gradient-to-br from-indigo-50 to-rose-50 dark:from-gray-900 dark:to-gray-800">
       <div className="text-center">
         <h1 className="text-3xl font-bold">Welcome to MixMatch!</h1>
@@ -58,6 +83,7 @@ export default function OnboardingPage() {
         <p className="mt-4 text-sm text-indigo-600 dark:text-indigo-400">
           Vibe feature will be available after completing your profile
         </p>
+
       </div>
     </div>
   )
