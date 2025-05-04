@@ -1,47 +1,29 @@
-import './globals.css';
-import SessionProvider from './providers/Sessionprovider';
-import { Manrope, Space_Mono, Inter_Tight, Lato, Phudu } from 'next/font/google';
-import type { Metadata } from 'next';
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { ThemeProvider } from "@/components/theme-provider"
 
-const inter = Inter_Tight({
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  variable: '--font-manrope',
-});
-
-const spaceMono = Space_Mono({
-  subsets: ['latin'],
-  variable: '--font-space-mono',
-  weight: '400',
-});
-
-const lato = Lato({
-  subsets: ['latin'],
-  variable: '--font-lato',
-  weight: ['400', '700'], // Adjust weights as needed
-});
-
-const phudu = Phudu({
-  subsets: ['latin'],
-  variable: '--font-phudu',
-  weight: ['300', '400', '700'], // Adjust weights as needed
-});
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'MixMatch',
-  description: 'Connect with DJs and Event Planners',
-};
+  title: "MixMatch - Connect through music",
+  description: "Find people who share your musical taste",
+    generator: 'v0.dev'
+}
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${manrope.variable} ${spaceMono.variable} ${lato.variable} ${phudu.variable}`}>
-        <SessionProvider>{children}</SessionProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
