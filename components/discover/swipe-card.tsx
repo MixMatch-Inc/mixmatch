@@ -9,11 +9,13 @@ import type { Profile } from "./swipe-deck"
 interface SwipeCardProps {
   profile: Profile
   swipeDirection: "left" | "right" | "up" | null
+  lastSwipedDirection?: "left" | "right" | "up" | null
 }
 
-export function SwipeCard({ profile, swipeDirection }: SwipeCardProps) {
+export function SwipeCard({ profile, swipeDirection, lastSwipedDirection }: SwipeCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [showSwipeIndicator, setShowSwipeIndicator] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
   // Clean up audio on unmount
@@ -24,6 +26,15 @@ export function SwipeCard({ profile, swipeDirection }: SwipeCardProps) {
       }
     }
   }, [])
+
+  // Show swipe indicator when swipe direction changes
+  useEffect(() => {
+    if (swipeDirection) {
+      setShowSwipeIndicator(true)
+    } else {
+      setShowSwipeIndicator(false)
+    }
+  }, [swipeDirection])
 
   const togglePlayPreview = () => {
     if (!profile.anthem.previewUrl) return
@@ -61,9 +72,26 @@ export function SwipeCard({ profile, swipeDirection }: SwipeCardProps) {
     }
   }
 
+  // Get entrance animation based on last swiped direction
+  const getEntranceAnimation = () => {
+    if (!lastSwipedDirection) return ""
+
+    // Return the opposite animation of the last swipe
+    switch (lastSwipedDirection) {
+      case "left":
+        return "animate-enter-from-right"
+      case "right":
+        return "animate-enter-from-left"
+      case "up":
+        return "animate-enter-from-bottom"
+      default:
+        return ""
+    }
+  }
+
   return (
     <div
-      className={`relative w-full h-full rounded-xl overflow-hidden shadow-xl ${getSwipeAnimation()}`}
+      className={`relative w-full h-full rounded-xl overflow-hidden shadow-xl ${getSwipeAnimation()} ${getEntranceAnimation()}`}
       style={{ touchAction: "none" }}
     >
       {/* Background image */}

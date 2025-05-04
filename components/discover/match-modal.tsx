@@ -1,11 +1,13 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Play, Pause, MessageSquare } from "lucide-react"
+import { Play, Pause, MessageSquare, X } from "lucide-react"
 import { useRouter } from "next/navigation"
+import Confetti from "react-confetti"
+import { useWindowSize } from "@/hooks/use-window-size"
 
 interface MatchModalProps {
   isOpen: boolean
@@ -17,9 +19,41 @@ export function MatchModal({ isOpen, onClose, matchData }: MatchModalProps) {
   const router = useRouter()
   const [isPlaying, setIsPlaying] = useState(false)
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null)
+  const [showConfetti, setShowConfetti] = useState(false)
+  const [revealContent, setRevealContent] = useState(false)
+  const { width, height } = useWindowSize()
 
+  // Refs for the profile images
+  const yourImageRef = useRef<HTMLDivElement>(null)
+  const matchImageRef = useRef<HTMLDivElement>(null)
+
+  // Handle initial animations
   useEffect(() => {
-    // Clean up audio on unmount or when modal closes
+    if (isOpen) {
+      // Start confetti immediately
+      setShowConfetti(true)
+
+      // Reveal content after a short delay
+      setTimeout(() => {
+        setRevealContent(true)
+      }, 500)
+
+      // Stop confetti after 5 seconds
+      const confettiTimer = setTimeout(() => {
+        setShowConfetti(false)
+      }, 5000)
+
+      return () => {
+        clearTimeout(confettiTimer)
+      }
+    } else {
+      setRevealContent(false)
+      setShowConfetti(false)
+    }
+  }, [isOpen])
+
+  // Clean up audio on unmount or when modal closes
+  useEffect(() => {
     return () => {
       if (audio) {
         audio.pause()
@@ -69,24 +103,73 @@ export function MatchModal({ isOpen, onClose, matchData }: MatchModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-md p-0 overflow-hidden bg-gradient-to-b from-indigo-600 to-purple-700 text-white border-0">
-        {/* Confetti animation would go here in a real implementation */}
+        {/* Confetti animation */}
+        {showConfetti && (
+          <Confetti
+            width={width}
+            height={height}
+            recycle={true}
+            numberOfPieces={200}
+            gravity={0.15}
+            colors={["#FF5E5B", "#D8D8D8", "#7A77FF", "#FFE74C", "#69FFC9"]}
+          />
+        )}
+
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 rounded-full p-1.5 bg-white/10 hover:bg-white/20 z-10"
+        >
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </button>
 
         <div className="p-6 text-center">
-          <h2 className="text-2xl font-bold mb-1">It's a Match!</h2>
-          <p className="text-white/80 mb-6">{superLike ? "They super-liked you too!" : "You both liked each other"}</p>
+          <div
+            className={`transition-all duration-700 ${revealContent ? "opacity-100 transform translate-y-0" : "opacity-0 transform -translate-y-10"}`}
+          >
+            <h2 className="text-3xl font-bold mb-1">It's a Match!</h2>
+            <p className="text-white/80 mb-8">
+              {superLike ? "They super-liked you too! ✨" : "You both liked each other's music taste"}
+            </p>
+          </div>
 
-          <div className="flex justify-center space-x-4 mb-6">
-            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
+          <div className="flex justify-center space-x-4 mb-8 relative h-28">
+            {/* Your profile image */}
+            <div
+              ref={yourImageRef}
+              className={`w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg absolute transition-all duration-1000 ${
+                revealContent
+                  ? "left-[calc(50%-80px)] transform rotate-[-10deg]"
+                  : "left-[calc(50%-40px)] transform rotate-0"
+              }`}
+            >
               {/* This would be the current user's photo */}
-              <img src="/placeholder.svg?height=96&width=96" alt="You" className="w-full h-full object-cover" />
+              <img src="/placeholder.svg?height=112&width=112" alt="You" className="w-full h-full object-cover" />
             </div>
 
-            <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
-              <img src={user.photoUrl || "/placeholder.svg"} alt={user.name} className="w-full h-full object-cover" />
+            {/* Match profile image */}
+            <div
+              ref={matchImageRef}
+              className={`w-28 h-28 rounded-full overflow-hidden border-4 border-white shadow-lg absolute transition-all duration-1000 ${
+                revealContent
+                  ? "left-[calc(50%+8px)] transform rotate-[10deg]"
+                  : "left-[calc(50%-40px)] transform rotate-0"
+              }`}
+            >
+              <img
+                src={user.photoUrl || "/placeholder.svg?height=112&width=112"}
+                alt={user.name}
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-6">
+          <div
+            className={`bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-6 transition-all duration-700 ${
+              revealContent ? "opacity-100 transform translate-y-0" : "opacity-0 transform translate-y-10"
+            }`}
+          >
             <h3 className="text-xl font-bold mb-1">
               {user.name}, {user.age}
             </h3>
@@ -134,7 +217,11 @@ export function MatchModal({ isOpen, onClose, matchData }: MatchModalProps) {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <div
+            className={`flex flex-col sm:flex-row gap-3 justify-center transition-all duration-700 ${
+              revealContent ? "opacity-100 transform translate-y-0" : "opacity-0 transform translate-y-10"
+            }`}
+          >
             <Button
               variant="secondary"
               className="bg-white text-indigo-600 hover:bg-gray-100"

@@ -60,6 +60,7 @@
     "zod": "^3.24.1",
     "@react-spring/native": "latest",
     "@react-spring/web": "latest",
+    "react-confetti": "latest",
     "react-tinder-card": "latest"
   },
   "devDependencies": {

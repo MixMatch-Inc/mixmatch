@@ -160,6 +160,7 @@ export function SwipeDeck() {
   const [showMatch, setShowMatch] = useState(false)
   const [matchData, setMatchData] = useState<any>(null)
   const [swipeDirection, setSwipeDirection] = useState<"left" | "right" | "up" | null>(null)
+  const [lastSwipedDirection, setLastSwipedDirection] = useState<"left" | "right" | "up" | null>(null)
 
   // References for card swiping
   const currentIndexRef = useRef(currentIndex)
@@ -204,6 +205,9 @@ export function SwipeDeck() {
   }, [])
 
   const handleSwipe = async (direction: "left" | "right" | "up", index: number) => {
+    // Store the last swiped direction for animation
+    setLastSwipedDirection(direction)
+
     // Update current index
     setCurrentIndex(index - 1)
 
@@ -227,8 +231,11 @@ export function SwipeDeck() {
 
       // Check if it's a match
       if (data.match) {
-        setMatchData(data)
-        setShowMatch(true)
+        // Add a small delay before showing the match modal for better UX
+        setTimeout(() => {
+          setMatchData(data)
+          setShowMatch(true)
+        }, 500)
       }
     } catch (err) {
       console.error("Error recording swipe:", err)
@@ -294,7 +301,11 @@ export function SwipeDeck() {
               onSwipe={(dir) => handleSwipe(dir as "left" | "right" | "up", index)}
               preventSwipe={["down"]}
             >
-              <SwipeCard profile={profile} swipeDirection={currentIndex === index ? swipeDirection : null} />
+              <SwipeCard
+                profile={profile}
+                swipeDirection={currentIndex === index ? swipeDirection : null}
+                lastSwipedDirection={lastSwipedDirection}
+              />
             </TinderCard>
           </div>
         ))}
