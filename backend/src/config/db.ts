@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 export const connectDatabase = async (): Promise<void> => {
   try {
-    const mongoUri = process.env['DATABASE_URL'] || 'mongodb://localhost:27017/mixmatch';
+    const mongoUri = process.env['MONGO_URI'] || 'mongodb://localhost:27017/mixmatch';
 
     await mongoose.connect(mongoUri, {
       bufferCommands: false,

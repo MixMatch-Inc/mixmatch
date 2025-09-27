@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 export interface IUser extends Document {
   email: string;
   password: string;
+  comparePassword(candidatePassword: string): Promise<boolean>;
+  getPublicProfile(): Omit<IUser, 'password'>;
 }
 
 const userSchema = new Schema<IUser>({
@@ -25,6 +27,11 @@ const userSchema = new Schema<IUser>({
 
 userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
   return await bcrypt.compare(candidatePassword, this.password);
+};
+
+userSchema.methods.getPublicProfile = function () {
+  const { password, ...publicData } = this.toObject();
+  return publicData;
 };
 
 export const User = mongoose.model<IUser>('User', userSchema);
