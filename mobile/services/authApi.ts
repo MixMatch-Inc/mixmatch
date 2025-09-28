@@ -1,20 +1,23 @@
 import apiClient from './apiClient';
 import { AxiosResponse } from 'axios';
-
+interface SignUpPayload {
+  name: string;
+  email: string;
+  password: string;
+}
+interface SignUpResponse {
+  message: string;
+  
+}
 
 interface AuthPayload {
   email: string;
   password: string;
 }
 
-interface SignUpPayload extends AuthPayload {
-  name: string;
-}
-
 interface AuthResponse {
   message: string;
   token: string; 
-  
   user?: { id: string; name: string; email: string };
 }
 
@@ -32,3 +35,5 @@ export default {
   signUp,
   login,
 };
+
+
