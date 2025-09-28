@@ -8,22 +8,27 @@ export interface IUser extends Document {
   getPublicProfile(): Omit<IUser, 'password'>;
 }
 
-const userSchema = new Schema<IUser>({
-  email: {
-    type: String,
-    required: [true, 'Email is required'],
-    unique: true,
-    trim: true,
-    lowercase: true,
-    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please fill a valid email address'],
+const userSchema = new Schema<IUser>(
+  {
+    email: {
+      type: String,
+      required: [true, 'Email is required'],
+      unique: true,
+      trim: true,
+      lowercase: true,
+      match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please fill a valid email address'],
+    },
+    password: {
+      type: String,
+      required: [true, 'Password is required'],
+      minlength: [8, 'Password must be at least 8 characters long'],
+      select: false,
+    },
   },
-  password: {
-    type: String,
-    required: [true, 'Password is required'],
-    minlength: [6, 'Password must be at least 6 characters long'],
-    select: false,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 userSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
   return await bcrypt.compare(candidatePassword, this.password);
