@@ -1,3 +1,4 @@
+# TG https://t.me/mixmatchinc
 # MixMatch Monorepo
 
 This is the foundational monorepo for the MixMatch project, containing the backend and mobile applications.
@@ -37,3 +38,5 @@ This is the foundational monorepo for the MixMatch project, containing the backe
 
 - **Linting:** Run `npm run lint` from the root to check for code style issues.
 - **Type Checking:** Run `npx tsc --noEmit` from the root to check for TypeScript errors across all projects.
+
+
