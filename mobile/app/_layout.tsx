@@ -1,23 +1,31 @@
-import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Stack } from 'expo-router';
+import { AuthProvider, useAuth } from '../context/AuthContext';
+import { ActivityIndicator, View } from 'react-native';
 
-export default function TabLayout() {
+const InitialLayout = () => {
+  const { isLoading, token } = useAuth();
+  
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
+
   return (
-    <Tabs>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <Ionicons name="home" color={color} size={28} />,
-        }}
-      />
-      <Tabs.Screen
-        name="profile" 
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ color }) => <Ionicons name="person-circle" color={color} size={28} />,
-        }}
-      />
-    </Tabs>
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+    </Stack>
+  );
+};
+
+
+export default function RootLayout() {
+  return (
+    <AuthProvider>
+      <InitialLayout />
+    </AuthProvider>
   );
 }
